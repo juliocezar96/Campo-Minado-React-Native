@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View } from 'react-native';
 
+import Flag from './src/components/Flag';
 import Field from './src/components/Field';
 import params from './src/params';
 
@@ -13,6 +14,9 @@ export default class App extends Component{
         <Text style={styles.instructions}>Tamanho da grade: 
           {params.getRowsAmount()}x{params.getColumnsAmount()}
         </Text>
+
+        <Flag />
+        <Flag bigger/>
 
         <Field />
         <Field opened />
@@ -32,7 +36,11 @@ export default class App extends Component{
 
 const styles = StyleSheet.create({
   container:{
-
+    flex: 1,
+    justifyContent: 'center',
+    justifyContent:'space-around',
+    alignItems:'center',
+    
   },
   welcome:{
 
