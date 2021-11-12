@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, Alert } from 'react-native';
 
+import LevelSelect from './src/screens/LevelSelect';
 import Header from './src/components/Header';
 import { createMinedBoard, cloneBoard, openField, hadExplosion, wonGame, showMines, invertFlag,flagsUsed } from './src/functions';
 import MineField from './src/components/MineField';
@@ -31,7 +32,8 @@ export default class App extends Component{
     return {
       board : createMinedBoard(rows, cols, this.minesAmount()),
       won: false,
-      lost: false
+      lost: false,
+      showLevelSelection: false
     }
 
   }
@@ -45,11 +47,11 @@ export default class App extends Component{
 
     if(lost){
       showMines(board)
-      Alert.alert('Peeerdeu', 'LOL');
+      Alert.alert('BOOOOMMMMBAA!!!!', 'LOOOL');
     }
 
     if(won){
-      Alert.alert('Parabens', 'Ganhou');
+      Alert.alert('Parabens', 'Ganhou!');
     }
 
     this.setState({board, lost, won});
@@ -62,17 +64,26 @@ export default class App extends Component{
     const won = wonGame(board);
 
     if(won){
-      Alert.alert('Parabens', 'Ganhou')
+      Alert.alert('Parabens', 'Ganhou!!!')
     }
 
     this.setState({board, won});
   }
 
+  onLevelSelected = level => {
+    params.difficultLevel  = level
+    this.setState(this.createState())
+  }
+
   render(){
     return(
       <View style={styles.container}>
+        <LevelSelect isVisible={this.state.showLevelSelection}
+        onLevelSelected={this.onLevelSelected} 
+        onCancel={() => this.setState({showLevelSelection: false})} />
        <Header flagsLeft={this.minesAmount() - flagsUsed(this.state.board)} 
-       onNewGame={() => this.setState(this.createState())}/>
+       onNewGame={() => this.setState(this.createState())}
+        onFlagPress={() => this.setState({showLevelSelection: true})}/>
         <View style={styles.board}>
           <MineField board={this.state.board}
            onOpenField={this.onOpenField}
